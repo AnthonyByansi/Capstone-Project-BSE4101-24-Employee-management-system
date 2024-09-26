@@ -11,7 +11,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     services:
       mysql:
         image: mysql:5.7
@@ -20,7 +20,7 @@ jobs:
           MYSQL_DATABASE: employee_management
         ports:
           - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+        options: --health-cmd "mysqladmin ping --silent" --health-interval 10s --health-timeout 5s --health-retries 3
 
     steps:
     - name: Checkout code
@@ -34,44 +34,22 @@ jobs:
     - name: Install PHP dependencies
       run: composer install --prefer-dist --no-progress --no-suggest
 
-    - name: Set up environment
+    - name: Set up MySQL
       run: |
+        sudo mysql -e "CREATE DATABASE employee_management;"
         cp .env.example .env
         php artisan key:generate
-
-    - name: Wait for MySQL
-      run: |
-        while ! mysqladmin ping -h"127.0.0.1" -P3306 --silent; do
-          sleep 1
-        done
-
-    - name: Run database migrations
-      run: php artisan migrate --env=testing
-      env:
-        DB_HOST: 127.0.0.1
-        DB_PORT: 3306
-        DB_DATABASE: employee_management
-        DB_USERNAME: root
-        DB_PASSWORD: root
+        php artisan migrate --env=testing
 
     - name: Run Unit Tests
       run: php artisan test
-      env:
-        DB_HOST: 127.0.0.1
-        DB_PORT: 3306
-        DB_DATABASE: employee_management
-        DB_USERNAME: root
-        DB_PASSWORD: root
-
-    - name: Install Node.js dependencies
-      run: npm ci
 
     - name: Run frontend build
       run: npm run build
 
     - name: Run PHP Code Sniffer
       run: vendor/bin/phpcs
-
+      
     - name: Run PHPStan
       run: ./tools/phpstan analyse --no-progress --error-format=github
       
@@ -79,7 +57,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
-    
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
@@ -99,7 +77,7 @@ jobs:
         echo "Deploying to Azure..."
         git pull
         composer install --prefer-dist --no-progress --no-suggest
-        npm ci
+        npm install
         npm run production
         php artisan migrate --force
 
@@ -109,3 +87,4 @@ jobs:
         app-name: "Capstone Project BSE4101-24"
         slot-name: "production"
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+
