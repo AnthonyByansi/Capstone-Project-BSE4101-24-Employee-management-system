@@ -32,7 +32,7 @@ jobs:
         php-version: 7.4
 
     - name: Install PHP dependencies
-      run: composer install --prefer-dist --no-progress --no-suggest
+      run: composer install --prefer-dist --no-progress 
 
     - name: Set up MySQL
       run: |
