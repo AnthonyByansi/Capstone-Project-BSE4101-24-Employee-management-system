@@ -36,7 +36,6 @@ jobs:
 
     - name: Set up MySQL
       run: |
-        sudo systemctl start mysql
         sudo mysql -e "CREATE DATABASE employee_management;"
         cp .env.example .env
         php artisan key:generate
