@@ -47,6 +47,12 @@ jobs:
     - name: Run frontend build
       run: npm run build
 
+    - name: Run PHP Code Sniffer
+      run: vendor/bin/phpcs
+      
+    - name: Run PHPStan
+      run: ./tools/phpstan analyse --no-progress --error-format=github
+      
   deploy:
     needs: build
     runs-on: ubuntu-latest
