@@ -20,7 +20,7 @@ jobs:
           MYSQL_DATABASE: employee_management
         ports:
           - 3306:3306
-        options: --health-cmd="mysqladmin ping --silent" --health-interval=10s --health-timeout=5s --health-retries=3
+        options: --health-cmd "mysqladmin ping --silent" --health-interval 10s --health-timeout 5s --health-retries 3
 
     steps:
     - name: Checkout code
@@ -30,30 +30,14 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: 8.2
-        extensions: mbstring, pdo, mysql
 
     - name: Install PHP dependencies
       run: composer install --prefer-dist --no-progress --no-suggest
 
-    - name: Prepare .env file
+    - name: Set up MySQL
       run: |
+        sudo mysql -e "CREATE DATABASE employee_management;"
         cp .env.example .env
-        echo "DB_CONNECTION=mysql" >> .env
-        echo "DB_HOST=127.0.0.1" >> .env
-        echo "DB_PORT=3306" >> .env
-        echo "DB_DATABASE=employee_management" >> .env
-        echo "DB_USERNAME=root" >> .env
-        echo "DB_PASSWORD=root" >> .env
-
-    - name: Wait for MySQL to be ready
-      run: |
-        until mysqladmin ping -h"127.0.0.1" --silent; do
-          echo "Waiting for MySQL..."
-          sleep 1
-        done
-
-    - name: Run database migrations
-      run: |
         php artisan key:generate
         php artisan migrate --env=testing
 
@@ -103,3 +87,4 @@ jobs:
         app-name: "Capstone Project BSE4101-24"
         slot-name: "production"
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+
