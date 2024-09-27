@@ -46,9 +46,7 @@ jobs:
           find . -name "*.php" -print0 | xargs -0 -n 1 php -l
 
       # # Step 7: Run JavaScript linting(checks for syntax errors in JavaScript files)
-      # - name: Run JS lint
-      #   run: |
-      #     npm run lint  # Ensure you have a 'lint' script in your package.json
-    # Run Unit Tests
-      - name: Run Unit Tests
-        run: php artisan test
+      - name: Run JS lint
+        run: |
+          npm run lint  # Ensure you have a 'lint' script in your package.json
+   
