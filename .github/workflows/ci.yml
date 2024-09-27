@@ -22,7 +22,7 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.1'  
+          php-version: '8.1+'  
 
       # Step 3: Install PHP dependencies (using Composer)
       - name: Install PHP dependencies
