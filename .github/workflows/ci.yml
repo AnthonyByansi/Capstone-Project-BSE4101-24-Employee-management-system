@@ -40,7 +40,7 @@ jobs:
         run: |
           npm install
 
-      # Step 6: Run PHP linting (checks for syntax errors in PHP files)
+      # Step 6: Run PHP linting(checks for syntax errors in PHP files)
       - name: Run PHP lint
         run: |
           find . -name "*.php" -print0 | xargs -0 -n 1 php -l
