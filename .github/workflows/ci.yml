@@ -1,22 +1,52 @@
-name: CI
+name: CI Pipeline
 
-on: [push]
+on:
+  push:
+    branches:
+      - main  # Trigger the workflow when code is pushed to the 'main' branch
+  pull_request:
+    branches:
+      - main  # Trigger on pull requests to 'main'
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      # Step 1: Checkout the code from the repository
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Set up PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '7.4'
+      # Step 2: Set up PHP (for Blade templates and PHP code)
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'  # Adjust the PHP version based on your project
 
-    - name: Install dependencies
-      run: composer install
+      # Step 3: Install PHP dependencies (using Composer)
+      - name: Install PHP dependencies
+        run: |
+          composer install --no-progress --no-interaction
 
-    - name: Run build
-      run: php artisan build
+      # Step 4: Set up Node.js (for Vue.js and JavaScript dependencies)
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'  # Adjust the Node.js version if needed
+
+      # Step 5: Install Node.js dependencies (for Vue.js)
+      - name: Install Node.js dependencies
+        run: |
+          npm install
+
+      # Step 6: Run PHP linting (checks for syntax errors in PHP files)
+      - name: Run PHP lint
+        run: |
+          find . -name "*.php" -print0 | xargs -0 -n 1 php -l
+
+      # Step 7: Run JavaScript linting (checks for syntax errors in JavaScript files)
+      - name: Run JS lint
+        run: |
+          npm run lint  # Ensure you have a 'lint' script in your package.json
+
