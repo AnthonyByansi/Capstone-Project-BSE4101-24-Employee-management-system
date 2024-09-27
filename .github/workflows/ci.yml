@@ -24,7 +24,7 @@ jobs:
         with:
           php-version: '8.2'  
 
-      # Step 3: Install PHP dependencies (using Composer)
+      # Step 3: Install PHP dependencies(using Composer)
       - name: Install PHP dependencies
         run: |
           composer install --no-progress --no-interaction
