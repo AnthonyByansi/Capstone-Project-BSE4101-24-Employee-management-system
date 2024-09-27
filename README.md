@@ -62,8 +62,11 @@
    ```bash
    php artisan serve
    ```
-
-7. **Access the App**: Open `http://localhost:8000` in your browser.
+7. **Run the Application  in new terminal for ccs page styles**:
+   ```bash
+   npm run dev
+   ```
+8. **Access the App**: Open `http://localhost:8000` in your browser.
 
 ## 🧪 Testing
 
