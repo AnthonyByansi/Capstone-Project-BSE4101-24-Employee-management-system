@@ -33,7 +33,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14'  # Adjust the Node.js version if needed
+          node-version: '16'  # Updated Node.js version for compatibility with ESLint
 
       # Step 5: Install Node.js dependencies (for Vue.js)
       - name: Install Node.js dependencies
@@ -49,4 +49,3 @@ jobs:
       - name: Run JS lint
         run: |
           npm run lint  # Ensure you have a 'lint' script in your package.json
-
