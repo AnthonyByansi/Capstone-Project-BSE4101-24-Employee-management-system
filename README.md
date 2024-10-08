@@ -1,10 +1,10 @@
-# 💼 Capstone Project BSE4101-24: Employee Management System
+# � Capstone Project BSE4101-24: Employee Management System
 
-## 📋 Overview
+## � Overview
 
 **Capstone-Project-BSE4101-24** is a comprehensive employee management system built to simplify and automate HR processes. This web application allows organizations to manage employees, track performance, handle leave requests, and generate reports efficiently. It is designed using **HTML**, **CSS**, **Blade**, **PHP**, **JavaScript**, and **Vue.js**.
 
-## 🚀 Features
+## � Features
 
 - **Employee Management**: Register, update, and manage employee profiles.
 - **Leave Tracking**: Submit and approve leave requests with an intuitive interface.
@@ -12,7 +12,7 @@
 - **Real-time Notifications**: Get updates on leave approvals, new employee registrations, and more.
 - **Responsive Design**: Fully optimized for desktop and mobile use.
 
-## 🛠️ Tech Stack
+## � Tech Stack
 
 - **Frontend**: HTML, CSS, JavaScript, Vue.js
 - **Backend**: PHP, Blade templating
@@ -21,7 +21,7 @@
 - **Continuous Integration**: GitHub Actions
 - **Deployment**: Staging and Production environments
 
-## 📂 Installation Guide
+## � Installation Guide
 
 ### Prerequisites
 - **PHP** 7.4 or higher
@@ -134,6 +134,77 @@ php artisan test
 ## 🚀 Deployment
 
 The application is configured for **CI/CD** using **GitHub Actions**, deploying automatically to staging and production environments upon merging changes to the `main` branch.
+
+## 📄 Logging Setup and Usage Guidelines
+
+### Logging Framework
+
+The application uses the built-in Laravel logging system, which is based on the Monolog library. The logging configuration is located in the `config/logging.php` file.
+
+### Logging Channels
+
+Two new logging channels have been added:
+
+1. **Deployments Channel**: Logs deployment events.
+2. **Application Channel**: Logs application errors, warnings, and information events.
+
+### Configuration
+
+The logging channels are configured in the `config/logging.php` file:
+
+```php
+'channels' => [
+    // Other channels...
+
+    'deployments' => [
+        'driver' => 'single',
+        'path' => storage_path('logs/deployments.log'),
+        'level' => env('LOG_LEVEL', 'info'),
+    ],
+
+    'application' => [
+        'driver' => 'daily',
+        'path' => storage_path('logs/application.log'),
+        'level' => env('LOG_LEVEL', 'debug'),
+        'days' => 14,
+    ],
+],
+```
+
+### Usage
+
+#### Logging Application Events
+
+To log application events, use the `Log` facade in your code:
+
+```php
+use Illuminate\Support\Facades\Log;
+
+// Log an info message
+Log::channel('application')->info('This is an informational message.');
+
+// Log a warning message
+Log::channel('application')->warning('This is a warning message.');
+
+// Log an error message
+Log::channel('application')->error('This is an error message.');
+```
+
+#### Logging Deployment Events
+
+Deployment events are logged automatically in the GitHub Actions workflows. The following steps have been added to the `.github/workflows/ci.yml` and `.github/workflows/main_capstoneproject.yml` files:
+
+```yaml
+# Log successful deployment
+- name: Log successful deployment
+  if: success()
+  run: echo "Deployment successful" >> deployment.log
+
+# Log failed deployment
+- name: Log failed deployment
+  if: failure()
+  run: echo "Deployment failed" >> deployment.log
+```
 
 ## 👥 Contributing
 
