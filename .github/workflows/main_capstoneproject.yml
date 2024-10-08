@@ -73,3 +73,10 @@ jobs:
           slot-name: 'Production'
           package: .
           
+      - name: Log successful deployment
+        if: success()
+        run: echo "Deployment successful" >> deployment.log
+
+      - name: Log failed deployment
+        if: failure()
+        run: echo "Deployment failed" >> deployment.log
