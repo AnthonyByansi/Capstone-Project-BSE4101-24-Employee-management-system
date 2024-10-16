@@ -18,44 +18,59 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Step 2: Set up PHP (for Blade templates and PHP code)
+      # Step 2: Cache Composer dependencies
+      - name: Cache Composer dependencies
+        uses: actions/cache@v2
+        with:
+          path: vendor
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      # Step 3: Set up PHP (for Blade templates and PHP code)
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'  
+          extensions: mbstring
 
-      # Step 3: Install PHP dependencies(using Composer)
+      # Step 4: Install PHP dependencies (using Composer)
       - name: Install PHP dependencies
-        run: |
-          composer install --no-progress --no-interaction
+        run: composer install --no-progress --no-interaction --prefer-dist
 
-      # Step 4: Set up Node.js (for Vue.js and JavaScript dependencies)
+      # Step 5: Cache Node.js dependencies
+      - name: Cache Node.js dependencies
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      # Step 6: Set up Node.js (for Vue.js and JavaScript dependencies)
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '16'  # Updated Node.js version 16 for compatibility with ESLint
+          node-version: '16'
 
-      # Step 5: Install Node.js dependencies (for Vue.js)
+      # Step 7: Install Node.js dependencies (for Vue.js)
       - name: Install Node.js dependencies
-        run: |
-          npm install
+        run: npm ci
 
-      # Step 6: Run PHP linting(checks for syntax errors in PHP files)
+      # Step 8: Run PHP linting (checks for syntax errors in PHP files)
       - name: Run PHP lint
-        run: |
-          find . -name "*.php" -print0 | xargs -0 -n 1 php -l
+        run: find . -name "*.php" -print0 | xargs -0 -n 1 php -l
 
-     # Step 7: Run JavaScript linting(checks for syntax errors in JavaScript files)
-      # - name: Run JS lint
-      #   run: |
-      #     npm run lint  # Ensure you have a 'lint' script in your package.json
+      # Step 9: Run JavaScript linting (checks for syntax errors in JavaScript files)
+      - name: Run JS lint
+        run: npm run lint  # Ensure you have a 'lint' script in your package.json
 
-      # Log successful deployment
+      # Step 10: Log successful deployment
       - name: Log successful deployment
         if: success()
         run: echo "Deployment successful" >> deployment.log
 
-      # Log failed deployment
+      # Step 11: Log failed deployment
       - name: Log failed deployment
         if: failure()
         run: echo "Deployment failed" >> deployment.log
