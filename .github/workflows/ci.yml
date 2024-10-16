@@ -3,10 +3,10 @@ name: CI Pipeline
 on:
   push:
     branches:
-      - main  # Trigger the workflow when code is pushed to the 'main' branch
+      - main  
   pull_request:
     branches:
-      - main  # Trigger on pull requests to 'main'
+      - main  
 
 jobs:
   build:
