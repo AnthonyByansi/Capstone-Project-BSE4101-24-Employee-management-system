@@ -49,6 +49,13 @@ jobs:
       # - name: Run JS lint
       #   run: |
       #     npm run lint  # Ensure you have a 'lint' script in your package.json
-      
 
-   
+      # Log successful deployment
+      - name: Log successful deployment
+        if: success()
+        run: echo "Deployment successful" >> deployment.log
+
+      # Log failed deployment
+      - name: Log failed deployment
+        if: failure()
+        run: echo "Deployment failed" >> deployment.log

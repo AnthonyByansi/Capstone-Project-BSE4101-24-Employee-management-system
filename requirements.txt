@@ -1,0 +1,38 @@
+Frontend (JavaScript/Vue/Build tools)
+- Vite: "^4.0.0" (development server and build tool)
+- Vue: "^3.2.37" (JavaScript framework)
+- Bootstrap: "^5.2.3" (CSS framework)
+- Axios: "^1.1.2" (HTTP client)
+- Sass: "^1.56.1" (CSS preprocessor)
+- @popperjs/core: "^2.11.6" (positioning engine for tooltips, popovers)
+
+ESLint and Code Linting Tools
+- ESLint: "^8.57.1" (linter for JavaScript and Vue)
+  - @eslint/js: "^9.11.1" (ESLint JavaScript parser)
+  - eslint-config-standard: "^17.1.0" (standard ESLint rules)
+  - eslint-plugin-import: "^2.30.0" (ESLint plugin for import/export syntax)
+  - eslint-plugin-n: "^16.6.2" (ESLint plugin for Node.js)
+  - eslint-plugin-promise: "^6.6.0" (ESLint plugin for Promise syntax)
+  - eslint-plugin-vue: "^9.28.0" (ESLint plugin for Vue.js)
+- Globals**: "^15.9.0" (Global variables for ESLint)
+- typescript-eslint: "^8.7.0" (TypeScript ESLint integration)
+
+Laravel (PHP Framework)
+- PHP: "^8.1" (required version of PHP)
+- Laravel Framework: "^10.8" (core Laravel framework)
+- Laravel Sanctum: "^3.2" (API authentication)
+- Laravel Tinker: "^2.8" (REPL for Laravel)
+- Laravel UI: "^4.2" (authentication scaffolding)
+
+PHP Libraries and Tools
+- GuzzleHTTP: "^7.2" (HTTP client for PHP)
+- FakerPHP: "^1.9.1" (fake data generator for testing)
+- Mockery: "^1.4.4" (PHP mock object framework for testing)
+- PHPUnit: "^10.5" (PHP testing framework)
+- Spatie Laravel Ignition: "^2.0" (exception handler)
+- Laravel Dusk: "^8.2" (browser testing)
+- Laravel Pint: "^1.0" (PHP code style fixer)
+- Laravel Sail: "^1.18" (Docker environment for Laravel)
+
+Laravel Plugins
+- Laravel Vite Plugin**: "^0.7.2" (integration of Vite with Laravel)
