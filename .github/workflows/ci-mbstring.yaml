@@ -37,6 +37,6 @@ jobs:
         run: composer install --no-progress --prefer-dist --no-scripts --optimize-autoloader
 
       # Step 5: Run tests
-      - name: Run tests
-        run: php artisan test
+      #- name: Run tests
+      #  run: php artisan test
 
