@@ -75,8 +75,8 @@ jobs:
           
       - name: Log successful deployment
         if: success()
-        run: echo "Deployment successful" >> deployment.log
+        run: echo "App successfully deployed" >> deployment.log
 
       - name: Log failed deployment
         if: failure()
-        run: echo "Deployment failed" >> deployment.log
+        run: echo "App deployment failed" >> deployment.log
