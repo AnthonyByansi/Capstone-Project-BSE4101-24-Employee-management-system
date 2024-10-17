@@ -1,27 +1,41 @@
-# � Capstone Project BSE4101-24: Employee Management System
+# Capstone Project BSE4101-24: Employee Management System
 
-## � Overview
+## Overview
 
-**Capstone-Project-BSE4101-24** is a comprehensive employee management system built to simplify and automate HR processes. This web application allows organizations to manage employees, track performance, handle leave requests, and generate reports efficiently. It is designed using **HTML**, **CSS**, **Blade**, **PHP**, **JavaScript**, and **Vue.js**.
+**Capstone-Project-BSE4101-24** is Our Employee Management System designed to streamline and automate HR processes. This web-based application enables organizations to efficiently manage employee profiles, track performance, handle leave requests, and generate insightful reports. It is developed using **HTML**, **CSS**, **Blade**, **PHP**, **JavaScript**, and **Vue.js**, ensuring a robust and user-friendly experience.
 
-## � Features
+## Key Features
 
-- **Employee Management**: Register, update, and manage employee profiles.
-- **Leave Tracking**: Submit and approve leave requests with an intuitive interface.
-- **Role-based Authentication**: Secure login for admins and employees with custom permissions.
-- **Real-time Notifications**: Get updates on leave approvals, new employee registrations, and more.
-- **Responsive Design**: Fully optimized for desktop and mobile use.
+| Feature                       | Description                                                                 |
+| ------------------------------ | --------------------------------------------------------------------------- |
+| **Employee Management**         | Create, update, and manage employee profiles seamlessly.                     |
+| **Leave Tracking**              | Submit and approve leave requests with an intuitive interface.               |
+| **Role-based Authentication**   | Secure login for administrators and employees with tailored permissions.     |
+| **Real-time Notifications**     | Instant updates on leave approvals, new registrations, and other key actions. |
+| **Responsive Design**           | Optimized for both desktop and mobile devices.                               |
 
-## � Tech Stack
+## Technology Stack
 
 - **Frontend**: HTML, CSS, JavaScript, Vue.js
-- **Backend**: PHP, Blade templating
+- **Backend**: PHP, Blade templating engine
 - **Database**: MySQL
 - **Version Control**: Git & GitHub
 - **Continuous Integration**: GitHub Actions
-- **Deployment**: Staging and Production environments
+- **Deployment**: Staging and Production Environments
 
-## � Installation Guide
+## Installation Guide
+
+### Prerequisites
+
+| Prerequisite | Minimum Version |
+| -------------| ---------------- |
+| **PHP**      | 7.4 or higher    |
+| **MySQL**    | Latest stable    |
+| **Composer** | Latest version   |
+| **Node.js**  | Latest version   |
+| **Git**      | Latest version   |
+
+##  Installation Guide
 
 ### Prerequisites
 - **PHP** 7.4 or higher
