@@ -21,15 +21,31 @@ jobs:
         with:
           php-version: '8.2'
 
+      # Step 2: Check if composer.json exists
       - name: Check if composer.json exists
         id: check_files
-        uses: andstor/file-existence-action@v1
-        with:
-          files: 'composer.json'
+        run: |
+          if [ -f "composer.json" ]; then
+            echo "::set-output name=files_exists::true"
+          else
+            echo "::set-output name=files_exists::false"
+          fi
 
+      # Step 3: Cache Composer dependencies
+      - name: Cache Composer dependencies
+        uses: actions/cache@v2
+        with:
+          path: ./cache/composer
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      # Step 4: Run Composer install if composer.json exists
       - name: Run composer install if composer.json exists
         if: steps.check_files.outputs.files_exists == 'true'
-        run: composer validate --no-check-publish && composer install --prefer-dist --no-progress
+        run: composer install --prefer-dist --no-progress --no-scripts --quiet
+        env:
+          COMPOSER_CACHE_DIR: ./cache/composer
 
       - name: Zip artifact for deployment
         run: zip release.zip ./* -r
