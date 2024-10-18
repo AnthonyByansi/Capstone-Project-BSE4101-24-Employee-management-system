@@ -1,3 +1,6 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
 name: Build and deploy PHP app to Azure Web App - Capstoneproject
 
 on:
@@ -11,36 +14,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout code
       - uses: actions/checkout@v4
 
-      # Step 2: Set up PHP
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
 
-      # Step 3: Cache Composer dependencies for faster builds
-      - name: Cache Composer dependencies
-        uses: actions/cache@v2
+      - name: Check if composer.json exists
+        id: check_files
+        uses: andstor/file-existence-action@v1
         with:
-          path: vendor
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-composer-
+          files: 'composer.json'
 
-      # Step 4: Run composer install if composer.json exists
-      - name: Install PHP dependencies
-        if: ${{ hashFiles('composer.json') }}
-        run: |
-          composer validate --no-check-publish
-          composer install --prefer-dist --no-progress
+      - name: Run composer install if composer.json exists
+        if: steps.check_files.outputs.files_exists == 'true'
+        run: composer validate --no-check-publish && composer install --prefer-dist --no-progress
 
-      # Step 5: Zip the artifact for deployment
       - name: Zip artifact for deployment
-        run: zip -r release.zip ./*
+        run: zip release.zip ./* -r
 
-      # Step 6: Upload artifact for deployment
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
@@ -54,28 +47,24 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write 
+      id-token: write #This is required for requesting the JWT
 
     steps:
-      # Step 1: Download artifact from build job
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: php-app
 
-      # Step 2: Unzip artifact for deployment
       - name: Unzip artifact for deployment
         run: unzip release.zip
-
-      # Step 3: Login to Azure
+      
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_482CA67E42744A02BEAF742995D81802 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_55A7FBAF40344876971A8FDFFBA244C9 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_2E9038A26D014FBFBE4ACA72C3C31934 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_3813F888BAC642F3BFA310049B291BEB }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_D6B326ABB7594531BC3B576DCC4C6E82 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_56CF43AC3178487AB8F46AE3CAD2F3EB }}
 
-      # Step 4: Deploy to Azure Web App
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
@@ -83,13 +72,4 @@ jobs:
           app-name: 'Capstoneproject'
           slot-name: 'Production'
           package: .
-
-      # Step 5: Log successful deployment
-      - name: Log successful deployment
-        if: success()
-        run: echo "App successfully deployed" >> deployment.log
-
-      # Step 6: Log failed deployment
-      - name: Log failed deployment
-        if: failure()
-        run: echo "App deployment failed" >> deployment.log
+          
